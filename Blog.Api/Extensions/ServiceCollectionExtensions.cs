@@ -9,7 +9,7 @@ namespace Blog.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
+    public static void AddCustomServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddJwtConfiguration(configuration);
         services.AddScoped<JwtTokenManager>();

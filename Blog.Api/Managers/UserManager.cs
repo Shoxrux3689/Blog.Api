@@ -28,9 +28,9 @@ public class UserManager : IUserManager
         return userModel;
     }
 
-    public async Task<UserModel?> GetUserByIdWithPosts(Guid id)
+    public async Task<UserModel?> GetUserWithPosts()
     {
-        var user = await _userRepository.GetUserByIdWithInclude(id);
+        var user = await _userRepository.GetUserByIdWithInclude(_userProvider.UserId);
         var userModel = user?.Adapt<UserModel>();
         return userModel;
     }
@@ -71,7 +71,7 @@ public class UserManager : IUserManager
         user.Email = updateUser.Email;
         user.Username = updateUser.Username;
         user.PasswordHash = CreatePasswordHash(user, updateUser.Password);
-        await _userRepository.UpdateUser();
+        await _userRepository.UpdateUser(user);
     }
 
     private string CreatePasswordHash(User user, string password)

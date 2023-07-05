@@ -9,6 +9,6 @@ public interface IUserManager
     public Task<string> Login(LoginUserModel loginUser);
     public Task<UserModel?> GetUserByUsername(string username);
     public Task<UserModel?> GetUserById(Guid id);
-    public Task<UserModel?> GetUserByIdWithPosts(Guid id);
+    public Task<UserModel?> GetUserWithPosts();
     public Task Update(UpdateUser updateUser);
 }
