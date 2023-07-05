@@ -24,14 +24,21 @@ public class UserRepository : IUserRepository
         return await _context.Users.Where(u => u.Id == id).FirstOrDefaultAsync();
     }
 
+    public async Task<User?> GetUserByIdWithInclude(Guid id)
+    {
+        return await _context.Users
+            .Where(u => u.Id == id)
+            .Include(u => u.Posts)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<User?> GetUserByUsername(string username)
     {
         return await _context.Users.Where(u => u.Username == username).FirstOrDefaultAsync();
     }
 
-    public async Task UpdateUser(User user)
+    public async Task UpdateUser()
     {
-        _context.Users.Update(user);
         await _context.SaveChangesAsync();
     }
 }
