@@ -9,6 +9,10 @@ namespace Blog.Api.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly AppDbContext _context;
+    public UserRepository(AppDbContext context)
+    {
+        _context = context;
+    }
     public async Task CreateUser(User user)
     {
         _context.Users.Add(user);
@@ -25,8 +29,9 @@ public class UserRepository : IUserRepository
         return await _context.Users.Where(u => u.Username == username).FirstOrDefaultAsync();
     }
 
-    public Task UpdateUser(User user)
+    public async Task UpdateUser(User user)
     {
-        throw new NotImplementedException();
+        _context.Users.Update(user);
+        await _context.SaveChangesAsync();
     }
 }
