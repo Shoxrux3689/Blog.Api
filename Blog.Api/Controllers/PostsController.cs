@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Blog.Api.Managers.Interfaces;
+using Blog.Api.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers;
@@ -7,31 +9,35 @@ namespace Blog.Api.Controllers;
 [ApiController]
 public class PostsController : ControllerBase
 {
-    public PostsController() 
+    private readonly IPostManager _postManager;
+    public PostsController(IPostManager postManager) 
     {
-
+        _postManager = postManager;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetPosts()
     {
-        return Ok();
+        return Ok(await _postManager.GetPosts());
     }
 
     [HttpGet("{postId}")]
     public async Task<IActionResult> GetPost(long postId)
     {
-        return Ok();
+        return Ok(await _postManager.GetPost(postId));
     }
 
-    public async Task<IActionResult> AddPost()
+    [HttpPost]
+    public async Task<IActionResult> AddPost(CreatePostModel createPost)
     {
+        await _postManager.CreatePost(createPost);
         return Ok();
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update(long postId)
+    public async Task<IActionResult> Update(UpdatePostModel updatePost)
     {
+        await _postManager.UpdatePost(updatePost);
         return Ok();
     }
 }
