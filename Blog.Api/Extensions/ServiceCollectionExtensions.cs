@@ -16,6 +16,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserManager, UserManager>();
         services.AddScoped<IUserRepository, UserRepository>();
 
+        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<IPostManager, PostManager>();
+
         services.AddScoped<UserProvider>();
         services.AddHttpContextAccessor();
     }
