@@ -28,12 +28,14 @@ namespace Blog.Api.Repositories
 
         public async Task<Post?> GetPost(long postId)
         {
-            return await _context.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+            return await _context.Posts.Where(p => p.Id == postId)
+                .Include(p => p.Likes).Include(p => p.Comments)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<Post>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts.Include(p => p.Likes).ToListAsync();
         }
 
 
