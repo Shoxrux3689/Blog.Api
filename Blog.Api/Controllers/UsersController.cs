@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -16,14 +16,14 @@ namespace Blog.Api.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(CreateUserModel createUser)
         {
             await _userManager.Register(createUser);
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginUserModel loginUser)
         {
             var token = await _userManager.Login(loginUser);
@@ -36,12 +36,13 @@ namespace Blog.Api.Controllers
             return Ok(await _userManager.GetUserWithPosts());
         }
 
-        [HttpGet]
+        [HttpGet("{username}")]
         public async Task<IActionResult> GetUserByUsername(string username)
         {
             return Ok(await _userManager.GetUserByUsername(username));
         }
 
+        [HttpPut]
         public async Task<IActionResult> UpdateProfile(UpdateUser updateUser)
         {
             await _userManager.Update(updateUser);

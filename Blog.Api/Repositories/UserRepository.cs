@@ -34,7 +34,8 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetUserByUsername(string username)
     {
-        return await _context.Users.Where(u => u.Username == username).FirstOrDefaultAsync();
+        return await _context.Users.Where(u => u.Username == username)
+            .Include(u => u.Posts).FirstOrDefaultAsync();
     }
 
     public async Task UpdateUser(User user)

@@ -68,6 +68,8 @@ public class UserManager : IUserManager
     public async Task Update(UpdateUser updateUser)
     {
         var user = await _userRepository.GetUserById(_userProvider.UserId);
+        if (user == null)
+            throw new Exception("User is not found");
         user.Email = updateUser.Email;
         user.Username = updateUser.Username;
         user.PasswordHash = CreatePasswordHash(user, updateUser.Password);
